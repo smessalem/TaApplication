@@ -21,9 +21,9 @@
     <div data-ng-app data-ng-init="checked = false">
 				        <form class="form-signin" action="/signin" method="POST" name="form">
           <label for="username">Username</label>
-          <input class="form-styling" type="text" name="username" placeholder=""/>
+          <input class="form-styling" type="text" name="username" placeholder="" required/>
           <label for="password">Password</label>
-          <input class="form-styling" type="text" name="password" placeholder=""/>
+          <input class="form-styling" type="text" name="password" placeholder="" required/>
           <input type="checkbox" id="checkbox"/>
           <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>
           <div class="btn-animate">
@@ -31,16 +31,16 @@
           </div>
 				        </form>
 
-				        <form class="form-signup" action="/signup" method="POST" name="form">
+				        <form class="form-signup" action="{{ url_for('signup') }}" method="POST" name="form" id="signup_form">
           <label for="fullname">Full name</label>
-          <input class="form-styling" type="text" name="fullname" placeholder=""/>
+          <input class="form-styling" type="text" name="fullname" placeholder="" required/>
           <label for="email">Email</label>
-          <input class="form-styling" type="email" name="email" placeholder=""/>
+          <input class="form-styling" type="email" name="email" placeholder="" required/>
           <label for="password">Password</label>
-          <input class="form-styling" type="password" name="password" placeholder=""/>
+          <input class="form-styling" type="password" name="password" placeholder="" required/>
           <label for="confirm_password">Confirm password</label>
-          <input class="form-styling" type="password" name="confirm_password" placeholder=""/>
-          <a data-ng-click="checked = !checked" class="btn-signup">Sign Up</a>
+          <input class="form-styling" type="password" name="confirm_password" placeholder="" required/>
+          <a data-ng-click="checked = !checked" class="btn-signup" onclick="document.getElementById('signup_form').submit(); return false;">Sign Up</a>
 				        </form>
 
             <div  class="success">
@@ -51,7 +51,8 @@
                   c-9.9-0.46-18.128-8.344-18.972-18.218c-0.292-3.416,0.276-6.673,1.51-9.578"></path>
                   </svg>
                 <div class="successtext">
-                   <p> Thanks for signing up! Check your email for confirmation.</p>
+                   <p> Thanks for signing up!</p>
+                    <a href="{{ url_for('home') }}" class="btn-signup" style="text-decoration:none">Home Page</a>
                 </div>
              </div>
       </div>
@@ -66,7 +67,7 @@
         <h1 class="welcome">Welcome, Chris</h1>
         <a class="btn-goback" value="Refresh" onClick="history.go()">Go back</a>
       </div>
-  </divk
+  </div>
 
   <a id="refresh" value="Refresh" onClick="history.go()">
     <svg class="refreshicon"   version="1.1" id="Capa_1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

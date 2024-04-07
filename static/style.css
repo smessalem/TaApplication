@@ -84,11 +84,11 @@ li {
 }
 
 .signup-active a {
-  cursor: pointer;
   color: #ffffff;
   text-decoration: none;
   border-bottom: solid 2px #1059FF;
   padding-bottom: 10px;
+  cursor: pointer;
 }
 
 .signup-inactive a {

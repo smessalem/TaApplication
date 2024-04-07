@@ -21,33 +21,11 @@ db = firebase.database()
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
+# db.child("Users").set("UID")
 @app.route('/')
 def home():
     return render_template("home.html")
-# @app.route('/signup', methods=['POST', 'GET'])
-# def signup():
-#     if request.method == 'POST':
-#         email = request.form["email"]
-#         password = request.form["password"]
-#         confirm_password = request.form["confirm_password"]
-#         try:
-#             if password == confirm_password:
-#                 try:
-#                     login_session['user'] = auth.create_user_with_email_and_password(email, password)
-#                     user = {"email" : email, "password" : password}
-#                     db.child("Users").child(login_session['user']['localId']).set(user)
-#                     db.child("Users").child(login_session['user']['localId']).child("Cart").set({"setup" : "cart"})
-#
-#                     return render_template("signin.html")
-#                 except:
-#                     return render_template("signin.html", error="Email already in use")
-#             else:
-#                 return render_template("signin.html", error="Confirm password does not match password")
-#         except Exception as e:
-#             print(f"There was an error: {e}")
-#             return render_template("signin.html", error="There was an error")
-#     else:
-#         return render_template('signin.html')
+
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     error = ""
@@ -72,19 +50,22 @@ def signup():
         try:
             if password == confirm_password:
                 try:
+                    print("debug")
                     login_session['user'] = auth.create_user_with_email_and_password(email, password)
+                    print("debug2")
+                    UID = login_session['user']['localId']
                     user = {"email" : email, "password" : password, "name" : username}
-                    db.child("Users").child(login_session['user']['localId']).set(user)
+                    db.child("Users").child(UID).set(user)
                     return redirect(url_for('home'))
                 except:
-                    return render_template("signin.html", error="Email already in use")
+                    return render_template("error.html", error="Email already in use")
             else:
-                return render_template("signin.html", error="Confirm password does not match password")
+                return render_template("signup.html", error="Confirm password does not match password")
         except Exception as e:
                 print(f"There was an error: {e}")
-                return render_template("signin.html", error="There was an error")
+                return render_template("signup.html", error="There was an error")
     else:
-        return render_template('signin.html')
+        return render_template('signup.html')
 
 
 @app.route('/signout')
