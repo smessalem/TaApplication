@@ -7,7 +7,6 @@ $(function () {
     $(".signin-active").toggleClass("signin-inactive");
     $(".forgot").toggleClass("forgot-left");
     $(this).removeClass("idle").addClass("active");
-    window.alert("btn2")
   });
 });
 
@@ -17,7 +16,6 @@ $(function () {
     $(".form-signup-left").toggleClass("form-signup-down");
     $(".success").toggleClass("success-left");
     $(".frame").toggleClass("frame-short");
-    window.alert("btn")
   });
 });
 
