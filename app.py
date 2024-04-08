@@ -57,12 +57,15 @@ def signup():
                     db.child("Users").child(UID).set(user)
                     return redirect(url_for('home', name=username))
                 except:
-                    return render_template("error.html", error="Email already in use")
+                    error = "Email already in use | Password less than 6 characters"
+                    return redirect(url_for('error', error_msg=error))
             else:
-                return render_template("signup.html", error="Confirm password does not match password")
+                error = "Confirm password does not match password"
+                return redirect(url_for('error', error_msg=error))
         except Exception as e:
                 print(f"There was an error: {e}")
-                return render_template("signup.html", error="There was an error")
+                error = "There was an error"
+                return redirect(url_for('error', error_msg=error))
     else:
         return render_template('signup.html')
 
@@ -73,9 +76,13 @@ def signout():
     auth.current_user = None
     return redirect(url_for('signin'))
 
+@app.route('/error')
+def error():
+    return render_template('error.html')
+
 # Press the green button in the gutter to run the script.
 
 if __name__ == '__main__':
-    app.secret_key = 'super secret key'
+    app.secret_key = 'If monkeys can write Shakespeare, they can write this too.'
     app.run()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
