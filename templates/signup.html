@@ -9,7 +9,7 @@
 </head>
     <body>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
+<label>{{ error_msg }}</label>
 <div class="container">
   <div class="frame">
     <div class="nav">
@@ -19,27 +19,25 @@
       </ul>
     </div>
     <div data-ng-app data-ng-init="checked = false">
-				        <form class="form-signin" action="/signin" method="POST" name="form">
-          <label for="username">Username</label>
-          <input class="form-styling" type="text" name="username" placeholder="" required/>
-          <label for="password">Password</label>
-          <input class="form-styling" type="text" name="password" placeholder="" required/>
-          <input type="checkbox" id="checkbox"/>
-          <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>
+				        <form class="form-signin" action="{{ url_for('signin') }}" method="POST" name="form" id="signin_form">
+          <label for="signin_email">Email</label>
+          <input class="form-styling" type="email" name="signin-email" id="signin_email" placeholder="" required/>
+          <label for="signin_pswrd">Password</label>
+          <input class="form-styling" type="password" name="signin-password" id="signin_pswrd" placeholder="" required/>
           <div class="btn-animate">
-            <a class="btn-signin">Sign in</a>
+            <a class="btn-signin" onclick="document.getElementById('signin_form').submit(); return false;">Sign in</a>
           </div>
 				        </form>
 
 				        <form class="form-signup" action="{{ url_for('signup') }}" method="POST" name="form" id="signup_form">
-          <label for="fullname">Full name</label>
-          <input class="form-styling" type="text" name="fullname" placeholder="" required/>
-          <label for="email">Email</label>
-          <input class="form-styling" type="email" name="email" placeholder="" required/>
-          <label for="password">Password</label>
-          <input class="form-styling" type="password" name="password" placeholder="" required/>
+          <label for="signup_name">Full name</label>
+          <input class="form-styling" type="text" name="signup-fullname" id="signup_name" placeholder="" required/>
+          <label for="signup_email">Email</label>
+          <input class="form-styling" type="email" name="signup-email" id="signup_email" placeholder="" required/>
+          <label for="signup_pswrd">Password</label>
+          <input class="form-styling" type="password" name="signup-password" id="signup_pswrd" placeholder="" required/>
           <label for="confirm_password">Confirm password</label>
-          <input class="form-styling" type="password" name="confirm_password" placeholder="" required/>
+          <input class="form-styling" type="password" name="signup-confirm_password" id="confirm_password" placeholder="" required/>
           <a data-ng-click="checked = !checked" class="btn-signup" onclick="document.getElementById('signup_form').submit(); return false;">Sign Up</a>
 				        </form>
 
@@ -61,12 +59,6 @@
         <a href="#">Forgot your password?</a>
       </div>
 
-      <div>
-        <div class="cover-photo"></div>
-        <div class="profile-photo"></div>
-        <h1 class="welcome">Welcome, Chris</h1>
-        <a class="btn-goback" value="Refresh" onClick="history.go()">Go back</a>
-      </div>
   </div>
 
   <a id="refresh" value="Refresh" onClick="history.go()">

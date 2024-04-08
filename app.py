@@ -12,7 +12,7 @@ config = {
   "messagingSenderId": "207116901642",
   "appId": "1:207116901642:web:cb95884028e3f8d3aaeef3",
   "databaseURL": "https://ta-application-cf857-default-rtdb.europe-west1.firebasedatabase.app/",
-};
+}
 
 # Initialize Firebase
 firebase = pyrebase.initialize_app(config);
@@ -22,41 +22,40 @@ db = firebase.database()
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # db.child("Users").set("UID")
-@app.route('/')
+@app.route('/home')
 def home():
-    return render_template("home.html")
+    UID = login_session['user']['localId']
+    return render_template("home.html", name=db.child("Users").child(UID).child('name').get().val())
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     error = ""
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form['signin-email']
+        password = request.form['signin-password']
         try:
-            login_session['user'] = auth.log_in_user_with_email_and_password(email, password)
+            login_session['user'] = auth.sign_in_with_email_and_password(email, password)
             return redirect(url_for('home'))
         except:
             error = "Authentication failed"
-    return render_template("signup.html")
+    return redirect(url_for('signup', error_msg=error))
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def signup():
     error = ""
     if request.method == 'POST':
-        username = request.form['fullname']
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form["confirm_password"]
+        username = request.form['signup-fullname']
+        email = request.form['signup-email']
+        password = request.form['signup-password']
+        confirm_password = request.form["signup-confirm_password"]
         try:
             if password == confirm_password:
                 try:
-                    print("debug")
                     login_session['user'] = auth.create_user_with_email_and_password(email, password)
-                    print("debug2")
                     UID = login_session['user']['localId']
                     user = {"email" : email, "password" : password, "name" : username}
                     db.child("Users").child(UID).set(user)
-                    return redirect(url_for('home'))
+                    return redirect(url_for('home', name=username))
                 except:
                     return render_template("error.html", error="Email already in use")
             else:
@@ -77,5 +76,6 @@ def signout():
 # Press the green button in the gutter to run the script.
 
 if __name__ == '__main__':
+    app.secret_key = 'super secret key'
     app.run()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

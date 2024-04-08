@@ -5,8 +5,8 @@
     <title>Home</title>
 </head>
 <body>
-    I'm Home
-<a href="{{ url_for('signin') }}"> Don't touch</a><br>
-<a href="{{ url_for('signup') }}">Sign Up/Log In Here</a>
+    I'm Home<br>
+    <p>Welcome, {{ name }}!</p><br>
+<a href="{{ url_for('signup') }}">Sign Up Here</a>
 </body>
 </html>
