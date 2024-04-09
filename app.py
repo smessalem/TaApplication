@@ -21,11 +21,20 @@ db = firebase.database()
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
+# print("debug")
+# print(db.child("Products").get().val())
+# for item in db.child("Products").get().val():
+#     print(item)
+#     print(db.child("Products").get().val()[item]['name'])
+
+
 # db.child("Users").set("UID")
+# p9 = {"name": "Webcam", "price": "50", "src": "p9.png"}
+# db.child('Products').child("p9").set(p9)
 @app.route('/home')
 def home():
     UID = login_session['user']['localId']
-    return render_template("home.html", name=db.child("Users").child(UID).child('name').get().val())
+    return render_template("index.html", name=db.child("Users").child(UID).child('name').get().val(), db_products=db.child("Products").get().val())
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -79,6 +88,22 @@ def signout():
 @app.route('/error')
 def error():
     return render_template('error.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/product')
+def product():
+    return render_template('product.html')
+
+@app.route('/why')
+def why():
+    return render_template('why.html')
+
+@app.route('/testimonial')
+def testimonial():
+    return render_template('testimonial.html')
 
 # Press the green button in the gutter to run the script.
 
