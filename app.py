@@ -27,10 +27,32 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 #     print(type(item))
 #     print(db.child("Products").get().val()[item]['name'])
 
+########## product db setup ##########
 
 # db.child("Users").set("UID")
+# db.child("Products").set("product_id")
+
+# p1 = {"name": "Camera", "price": "200", "src": "p1.png"}
+# db.child('Products').child("p1").set(p1)
+# p2 = {"name": "Controller Extension", "price": "50", "src": "p2.png"}
+# db.child('Products').child("p2").set(p2)
+# p3 = {"name": "Drone", "price": "600", "src": "p3.png"}
+# db.child('Products').child("p3").set(p3)
+# p4 = {"name": "X4 Lens", "price": "1200", "src": "p4.png"}
+# db.child('Products').child("p4").set(p4)
+# p5 = {"name": "XYZ Speaker", "price": "150", "src": "p5.png"}
+# db.child('Products').child("p5").set(p5)
+# p6 = {"name": "PS4 Controller", "price": "50", "src": "p6.png"}
+# db.child('Products').child("p6").set(p6)
+# p7 = {"name": "Spy Drone", "price": "800", "src": "p7.png"}
+# db.child('Products').child("p7").set(p7)
+# p8 = {"name": "Polaroid", "price": "300", "src": "p8.png"}
+# db.child('Products').child("p8").set(p8)
 # p9 = {"name": "Webcam", "price": "50", "src": "p9.png"}
 # db.child('Products').child("p9").set(p9)
+
+######### end product db setup ##########
+
 @app.route('/home')
 def home():
     UID = login_session['user']['localId']
@@ -65,7 +87,7 @@ def signup():
                     UID = login_session['user']['localId']
                     user = {"email" : email, "password" : password, "name" : username}
                     db.child("Users").child(UID).set(user)
-                    db.child("Users").child(login_session['user']['localId']).child("Cart").set("product_id")
+                    db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
                     return redirect(url_for('home', name=username))
                 except:
                     error = "Email already in use | Password less than 6 characters"
@@ -112,25 +134,33 @@ def testimonial():
 def add_to_cart(item):
     print("debug")
     UID = login_session['user']['localId']
-    db.child('Users').child(UID).child('Cart').child('cart').push(item)
+    product = db.child("Products").child(item).get().val()
+    db.child('Users').child(UID).child('Cart').child(item).set(product)
+    # carty = db.child('Users').child(UID).child('Cart').child('cart')
+    # carty.set({item : db.child('Products').child(item).get().val()})
     print("debug2")
     return redirect(url_for('home'))
 
 @app.route('/remove_cart/<string:item>', methods=['GET', 'POST'])
-#TODO: add cart removal
+def remove_cart(item):
+    UID = login_session['user']['localId']
+    db.child('Users').child(UID).child('Cart').child(item).remove()
+    if not (db.child('Users').child(UID).child('Cart').get().val() == None):
+        return redirect(url_for('cart'))
+    db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
+    return redirect(url_for('cart'))
+
 
 @app.route('/cart', methods=['GET', 'POST'])
 def cart():
     uid = login_session['user']['localId']
-    my_cart = db.child('Users').child(uid).child('Cart').child('cart').get().val()
-    my_products = db.child("Products").get().val()
+    my_cart = db.child('Users').child(uid).child('Cart').get().val()
     cart_total = 0
-    if not (my_cart == None):
+    if not (my_cart == "product_id"):
         for item in my_cart:
-            cart_total += int(my_products[my_cart[item]]['price'])
+            cart_total += int(db.child('Users').child(uid).child('Cart').child(item).child('price').get().val())
 
-    return render_template('cart.html', cart=my_cart,
-                           db_products=my_products, total=cart_total)
+    return render_template('cart.html', cart=my_cart, total=cart_total)
 
 @app.route('/account')
 def account():

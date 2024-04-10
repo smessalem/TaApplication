@@ -128,21 +128,25 @@
         </h2>
       </div>
       <div class="row">
-      {% if not (cart == None) %}
+      {% if not (cart == "product_id") %}
         {% for item in cart %}
         <div class="col-sm-6 col-lg-4">
           <div class="box">
             <div class="img-box">
-              <img src="../static/images/{{ db_products[cart[item]]['src'] }}" alt="">
-{#                <img src="../static/images/{{ item.child('src').get().val() }}" alt="">#}
+              <img src="../static/images/{{ cart[item]['src'] }}" alt="">
+                <a href="/remove_cart/{{item}}" class="add_cart_btn">
+                <span>
+                  Remove From Cart
+                </span>
+              </a>
             </div>
             <div class="detail-box">
               <h5>
-                {{ db_products[cart[item]]['name'] }}
+                {{ cart[item]['name'] }}
               </h5>
               <div class="product_info">
                 <h5>
-                  <span>$</span> {{ db_products[cart[item]]['price'] }}
+                  <span>$</span> {{ cart[item]['price'] }}
                 </h5>
 
               </div>
