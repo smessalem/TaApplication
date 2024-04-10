@@ -43,30 +43,25 @@
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  Call : +01 123455678990
+                  Call : +972 123456789
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  Email : demo@gmail.com
+                  Email : stormy@winds.org
                 </span>
               </a>
             </div>
-            <from class="search_form">
-              <input type="text" class="form-control" placeholder="Search here...">
-              <button class="" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </from>
+
             <div class="user_option_box">
-              <a href="" class="account-link">
+              <a href="{{ url_for('account') }}" class="account-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>
                   My Account
                 </span>
               </a>
-              <a href="" class="cart-link">
+              <a href="{{ url_for('cart') }}" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart
@@ -222,8 +217,7 @@
           <div class="box">
             <div class="img-box">
               <img src="../static/images/{{ db_products[item]['src'] }}" alt="">
-{#                <img src="../static/images/{{ item.child('src').get().val() }}" alt="">#}
-              <a href="" class="add_cart_btn">
+              <a href="/add_to_cart/{{item}}" class="add_cart_btn">
                 <span>
                   Add To Cart
                 </span>
@@ -487,15 +481,15 @@
             </h5>
             <p>
               <i class="fa fa-map-marker" aria-hidden="true"></i>
-              Address
+              Mount Olympus
             </p>
             <p>
               <i class="fa fa-phone" aria-hidden="true"></i>
-              +01 1234567890
+              +972 123456789
             </p>
             <p>
               <i class="fa fa-envelope" aria-hidden="true"></i>
-              demo@gmail.com
+              stormy@winds.org
             </p>
           </div>
         </div>
@@ -505,7 +499,7 @@
               Information
             </h5>
             <p>
-              Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
+              The shelter for your storm, built for late night shopping on stormy nights. Please enjoy the small comforts we can provide.
             </p>
           </div>
         </div>
@@ -516,27 +510,27 @@
             </h5>
             <ul>
               <li>
-                <a href="index.html">
+                <a href="{{ url_for('home') }}">
                   Home
                 </a>
               </li>
               <li>
-                <a href="about.html">
+                <a href="{{ url_for('about') }}">
                   About
                 </a>
               </li>
               <li>
-                <a href="product.html">
+                <a href="{{ url_for('product') }}">
                   Products
                 </a>
               </li>
               <li>
-                <a href="why.html">
+                <a href="{{ url_for('why') }}">
                   Why Us
                 </a>
               </li>
               <li>
-                <a href="testimonial.html">
+                <a href="{{ url_for('testimonial') }}">
                   Testimonial
                 </a>
               </li>
@@ -581,8 +575,7 @@
   <footer class="footer_section">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear"></span> All Rights Reserved By Stormy LLC.
       </p>
     </div>
   </footer>
@@ -594,6 +587,8 @@
   <script src="../static/js/bootstrap.js"></script>
   <!-- custom js -->
   <script src="../static/js/custom.js"></script>
+
+
 
 
 </body>

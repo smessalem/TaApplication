@@ -24,7 +24,7 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 # print("debug")
 # print(db.child("Products").get().val())
 # for item in db.child("Products").get().val():
-#     print(item)
+#     print(type(item))
 #     print(db.child("Products").get().val()[item]['name'])
 
 
@@ -34,7 +34,8 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 @app.route('/home')
 def home():
     UID = login_session['user']['localId']
-    return render_template("index.html", name=db.child("Users").child(UID).child('name').get().val(), db_products=db.child("Products").get().val())
+    return render_template("index.html", name=db.child("Users").child(UID).child('name').get().val(),
+                           db_products=db.child("Products").get().val(), uid=UID)
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -64,6 +65,7 @@ def signup():
                     UID = login_session['user']['localId']
                     user = {"email" : email, "password" : password, "name" : username}
                     db.child("Users").child(UID).set(user)
+                    db.child("Users").child(login_session['user']['localId']).child("Cart").set("product_id")
                     return redirect(url_for('home', name=username))
                 except:
                     error = "Email already in use | Password less than 6 characters"
@@ -83,7 +85,8 @@ def signup():
 def signout():
     login_session['user'] = None
     auth.current_user = None
-    return redirect(url_for('signin'))
+    print("Sign Out Successful")
+    return redirect(url_for('signup'))
 
 @app.route('/error')
 def error():
@@ -95,7 +98,7 @@ def about():
 
 @app.route('/product')
 def product():
-    return render_template('product.html')
+    return render_template('product.html', db_products=db.child("Products").get().val())
 
 @app.route('/why')
 def why():
@@ -104,6 +107,36 @@ def why():
 @app.route('/testimonial')
 def testimonial():
     return render_template('testimonial.html')
+
+@app.route('/add_to_cart/<string:item>', methods=['GET', 'POST'])
+def add_to_cart(item):
+    print("debug")
+    UID = login_session['user']['localId']
+    db.child('Users').child(UID).child('Cart').child('cart').push(item)
+    print("debug2")
+    return redirect(url_for('home'))
+
+@app.route('/remove_cart/<string:item>', methods=['GET', 'POST'])
+#TODO: add cart removal
+
+@app.route('/cart', methods=['GET', 'POST'])
+def cart():
+    uid = login_session['user']['localId']
+    my_cart = db.child('Users').child(uid).child('Cart').child('cart').get().val()
+    my_products = db.child("Products").get().val()
+    cart_total = 0
+    if not (my_cart == None):
+        for item in my_cart:
+            cart_total += int(my_products[my_cart[item]]['price'])
+
+    return render_template('cart.html', cart=my_cart,
+                           db_products=my_products, total=cart_total)
+
+@app.route('/account')
+def account():
+    UID = login_session['user']['localId']
+    return render_template('account.html', name=db.child("Users").child(UID).child('name').get().val(),
+                           email=db.child("Users").child(UID).child('email').get().val())
 
 # Press the green button in the gutter to run the script.
 
