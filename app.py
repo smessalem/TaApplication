@@ -21,12 +21,6 @@ db = firebase.database()
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# print("debug")
-# print(db.child("Products").get().val())
-# for item in db.child("Products").get().val():
-#     print(type(item))
-#     print(db.child("Products").get().val()[item]['name'])
-
 ########## product db setup ##########
 
 # db.child("Users").set("UID")
@@ -57,24 +51,29 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 def home():
     UID = login_session['user']['localId']
     return render_template("index.html", name=db.child("Users").child(UID).child('name').get().val(),
-                           db_products=db.child("Products").get().val(), uid=UID)
+                           db_products=db.child("Products").get().val(), uid=UID, current_page='home')
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
-    error = ""
+    signin_error = ""
     if request.method == 'POST':
         email = request.form['signin-email']
         password = request.form['signin-password']
         try:
+            print("debug")
+            print(email, password)
+
             login_session['user'] = auth.sign_in_with_email_and_password(email, password)
+            print("debug2")
             return redirect(url_for('home'))
         except:
-            error = "Authentication failed"
-    return redirect(url_for('signup', error_msg=error))
+            signin_error = "Authentication failed"
+            return redirect(url_for('signup', error_msg=signin_error))
+    return redirect(url_for('signup', error_msg=signin_error))
 
 @app.route('/', methods=['GET', 'POST'])
 def signup():
-    error = ""
+    signup_error = ""
     if request.method == 'POST':
         username = request.form['signup-fullname']
         email = request.form['signup-email']
@@ -90,17 +89,17 @@ def signup():
                     db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
                     return redirect(url_for('home', name=username))
                 except:
-                    error = "Email already in use | Password less than 6 characters"
-                    return redirect(url_for('error', error_msg=error))
+                    signup_error = "Email already in use | Password less than 6 characters"
+                    return redirect(url_for('signup', error_msg=signup_error))
             else:
-                error = "Confirm password does not match password"
-                return redirect(url_for('error', error_msg=error))
+                signup_error = "Confirm password does not match password"
+                return redirect(url_for('signup', error_msg=signup_error))
         except Exception as e:
                 print(f"There was an error: {e}")
-                error = "There was an error"
-                return redirect(url_for('error', error_msg=error))
+                signup_error = "There was an error"
+                return redirect(url_for('signup', error_msg=signup_error))
     else:
-        return render_template('signup.html')
+        return render_template('signup.html', error_msg=signup_error)
 
 
 @app.route('/signout')
@@ -110,17 +109,13 @@ def signout():
     print("Sign Out Successful")
     return redirect(url_for('signup'))
 
-@app.route('/error')
-def error():
-    return render_template('error.html')
-
 @app.route('/about')
 def about():
     return render_template('about.html')
 
 @app.route('/product')
 def product():
-    return render_template('product.html', db_products=db.child("Products").get().val())
+    return render_template('product.html', db_products=db.child("Products").get().val(), current_page='product')
 
 @app.route('/why')
 def why():
@@ -130,8 +125,8 @@ def why():
 def testimonial():
     return render_template('testimonial.html')
 
-@app.route('/add_to_cart/<string:item>', methods=['GET', 'POST'])
-def add_to_cart(item):
+@app.route('/add_to_cart//<string:current_page>/<string:item>', methods=['GET', 'POST'])
+def add_to_cart(current_page, item):
 
     UID = login_session['user']['localId']
     product = db.child("Products").child(item).get().val()
@@ -144,7 +139,7 @@ def add_to_cart(item):
         db.child('Users').child(UID).child('Cart').child(item).set(new_prod)
     else:
         db.child('Users').child(UID).child('Cart').child(item).set(product)
-    return redirect(url_for('home'))
+    return redirect(url_for(current_page))
 
 @app.route('/remove_cart/<string:item>', methods=['GET', 'POST'])
 def remove_cart(item):

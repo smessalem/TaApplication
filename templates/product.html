@@ -34,7 +34,7 @@
 
 <body class="sub_page">
 
-  <div class="hero_area">
+    <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="header_top">
@@ -44,30 +44,25 @@
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  Call : +01 123455678990
+                  Call : +972 123456789
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  Email : demo@gmail.com
+                  Email : stormy@winds.org
                 </span>
               </a>
             </div>
-            <from class="search_form">
-              <input type="text" class="form-control" placeholder="Search here...">
-              <button class="" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </from>
+
             <div class="user_option_box">
-              <a href="" class="account-link">
+              <a href="{{ url_for('account') }}" class="account-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>
                   My Account
                 </span>
               </a>
-              <a href="" class="cart-link">
+              <a href="{{ url_for('cart') }}" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart
@@ -93,14 +88,14 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
-                <li class="nav-item ">
-                  <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('about') }}"> About</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="{{ url_for('product') }}">Products</a>
+                  <a class="nav-link" href="{{ url_for('product') }}">Products <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('why') }}">Why Us</a>
@@ -133,8 +128,7 @@
           <div class="box">
             <div class="img-box">
               <img src="../static/images/{{ db_products[item]['src'] }}" alt="">
-{#                <img src="../static/images/{{ item.child('src').get().val() }}" alt="">#}
-              <a href="" class="add_cart_btn">
+              <a href="/add_to_cart/{{ current_page }}/{{item}}" class="add_cart_btn">
                 <span>
                   Add To Cart
                 </span>
@@ -272,8 +266,7 @@
   <footer class="footer_section">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear"></span> All Rights Reserved By Stormy LLC.
       </p>
     </div>
   </footer>

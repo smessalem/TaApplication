@@ -34,7 +34,7 @@
 
 <body class="sub_page">
 
-  <div class="hero_area">
+    <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="header_top">
@@ -44,30 +44,25 @@
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                  Call : +01 123455678990
+                  Call : +972 123456789
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  Email : demo@gmail.com
+                  Email : stormy@winds.org
                 </span>
               </a>
             </div>
-            <from class="search_form">
-              <input type="text" class="form-control" placeholder="Search here...">
-              <button class="" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </from>
+
             <div class="user_option_box">
-              <a href="" class="account-link">
+              <a href="{{ url_for('account') }}" class="account-link">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <span>
                   My Account
                 </span>
               </a>
-              <a href="" class="cart-link">
+              <a href="{{ url_for('cart') }}" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
                   Cart
@@ -81,7 +76,7 @@
       <div class="header_bottom">
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
               <span>
                 Stormy
               </span>
@@ -93,11 +88,11 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
-                <li class="nav-item ">
-                  <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('home') }}">Home</a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" href="{{ url_for('about') }}"> About</a>
+                  <a class="nav-link" href="{{ url_for('about') }}"> About <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('product') }}">Products</a>
@@ -126,16 +121,16 @@
           <div class="detail-box pr-md-3">
             <div class="heading_container">
               <h2>
-                We Provide Best For You
+                The Why, The How, The What
               </h2>
             </div>
             <p>
-              Totam architecto rem beatae veniam, cum officiis adipisci soluta perspiciatis ipsa, expedita maiores quae accusantium. Animi veniam aperiam, necessitatibus mollitia ipsum id optio ipsa odio ab facilis sit labore officia!
-              Repellat expedita, deserunt eum soluta rem culpa. Aut, necessitatibus cumque. Voluptas consequuntur vitae aperiam animi sint earum, ex unde cupiditate, molestias dolore quos quas possimus eveniet facilis magnam? Vero, dicta.
+              Our brilliant amazing super-cali-fragilistic-expialidocious founder based this organization upon a
+                number of core values.<br> Among them Comfort, Environmental-Friendliness, and High Quality standards.
+                He aimed to create a centralized, easier solution for buying all the various items anyone may need
+                in their day-to-day life.<br> Despite fierce competition, Stormy has managed to rise through the ranks
+                to become one of the fastest growing online platforms and will only keep growing.
             </p>
-            <a href="">
-              Read More
-            </a>
           </div>
         </div>
         <div class="col-md-6 px-0">
@@ -258,8 +253,7 @@
   <footer class="footer_section">
     <div class="container">
       <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Free Html Templates</a>
+        &copy; <span id="displayYear"></span> All Rights Reserved By Stormy LLC.
       </p>
     </div>
   </footer>

@@ -75,7 +75,7 @@
       <div class="header_bottom">
         <div class="container-fluid">
           <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
               <span>
                 Stormy
               </span>
@@ -122,9 +122,9 @@
                       Welcome to our shop
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                      We strive to provide the easiest and most comfortable shopping experience in the market. We are centered around being comfortable and environmentally friendly.
                     </p>
-                    <a href="">
+                    <a href="{{ url_for('about') }}">
                       Read More
                     </a>
                   </div>
@@ -143,19 +143,16 @@
                 <div class="col-md-6">
                   <div class="detail-box">
                     <h1>
-                      Welcome to our shop
+                      We take pride in variety
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                      Find everything from cameras, to speakers, to gaming equipment, to the moon and back. You can find it all here.
                     </p>
-                    <a href="">
-                      Read More
-                    </a>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="../static/images/slider-img.png" alt="">
+                    <img src="../static/images/slider-img2.png" alt="">
                   </div>
                 </div>
               </div>
@@ -167,19 +164,17 @@
                 <div class="col-md-6">
                   <div class="detail-box">
                     <h1>
-                      Welcome to our shop
+                      Quality matters most
                     </h1>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                      Our quality is one of our greatest sticking points. We make sure to only sell the best of the best <br>
+                        (DISCLAIMER: Use NOT recommended for fending off venomous reptiles)
                     </p>
-                    <a href="">
-                      Read More
-                    </a>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="../static/images/slider-img.png" alt="">
+                    <img src="../static/images/slider-img3.png" alt="">
                   </div>
                 </div>
               </div>
@@ -217,7 +212,7 @@
           <div class="box">
             <div class="img-box">
               <img src="../static/images/{{ db_products[item]['src'] }}" alt="">
-              <a href="/add_to_cart/{{item}}" class="add_cart_btn">
+              <a href="/add_to_cart/{{ current_page }}/{{item}}" class="add_cart_btn">
                 <span>
                   Add To Cart
                 </span>
@@ -256,10 +251,13 @@
               </h2>
             </div>
             <p>
-              Totam architecto rem beatae veniam, cum officiis adipisci soluta perspiciatis ipsa, expedita maiores quae accusantium. Animi veniam aperiam, necessitatibus mollitia ipsum id optio ipsa odio ab facilis sit labore officia!
-              Repellat expedita, deserunt eum soluta rem culpa. Aut, necessitatibus cumque. Voluptas consequuntur vitae aperiam animi sint earum, ex unde cupiditate, molestias dolore quos quas possimus eveniet facilis magnam? Vero, dicta.
+              We provide ethically sourced products in a timely efficient manner. We hold strict limitations as to the
+                transport of out product, as it must uphold our core values. We seek to contribute to a better future,
+                making sure the delivery of our products does not harm the environment. To do this, we harness
+                cutting-edge mycelium packaging technology as a replacement for plastics. This helps cushion the items
+                and preserve the high standard of quality we keep for you.
             </p>
-            <a href="">
+            <a href="{{ url_for('about') }}">
               Read More
             </a>
           </div>
@@ -295,7 +293,7 @@
                 Fast Delivery
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Our efficient system, all the way to your door
               </p>
             </div>
           </div>
@@ -307,10 +305,10 @@
             </div>
             <div class="detail-box">
               <h5>
-                Free Shiping
+                Free Shipping
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Stormy upholds a strict no-shipping-fee policy
               </p>
             </div>
           </div>
@@ -325,7 +323,7 @@
                 Best Quality
               </h5>
               <p>
-                variations of passages of Lorem Ipsum available
+                Providing the highest quality product in the market
               </p>
             </div>
           </div>
@@ -339,7 +337,7 @@
 
   <!-- client section -->
 
-  <section class="client_section layout_padding-bottom">
+  <section class="client_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
@@ -358,12 +356,10 @@
                     <i class="fa fa-quote-left" aria-hidden="true"></i>
                   </p>
                   <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page
-                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
-                    long established fact that a reader will be distracted by the readable content of a page when
-                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                    Stormy is a brilliant platform, where I managed to get most of my gear for the Amazon Rainforest
+                      expedition I went on last year. They sell good quality, durable products which can double as
+                      very useful bats in case of an emergency such as a snake in your sleeping bag. Despite what you
+                      may think, cuddling a Black Mamba is not as fun as it sounds.
                   </p>
                 </div>
                 <div class="client-id">
@@ -390,24 +386,22 @@
                     <i class="fa fa-quote-left" aria-hidden="true"></i>
                   </p>
                   <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page
-                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
-                    long established fact that a reader will be distracted by the readable content of a page when
-                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                    Stormy is so amazing, I use it to buy all of my paints and canvases and enjoy scrolling through it
+                      when I'm bored and enjoying all it's cool content. Through Stormy I met the love of my life, my
+                      wife who bought one of my first paintings and contacted me to see if I could make her some more.
+                      Beyond being incredibly useful, it will always have a special place in my heart because of that.
                   </p>
                 </div>
                 <div class="client-id">
                   <div class="img-box">
-                    <img src="../static/images/client.jpg" alt="">
+                    <img src="../static/images/client2.jpg" alt="">
                   </div>
                   <div class="name">
                     <h5>
-                      James Dew
+                      Martha Montgomery
                     </h5>
                     <h6>
-                      Photographer
+                      Artist
                     </h6>
                   </div>
                 </div>
@@ -422,24 +416,22 @@
                     <i class="fa fa-quote-left" aria-hidden="true"></i>
                   </p>
                   <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page
-                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it lookIt is a
-                    long established fact that a reader will be distracted by the readable content of a page when
-                    looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                    distribution of letters, as opposed to using 'Content here, content here', making it look
+                    Stormy is incredibly useful for all my work or personal-life needs. I use it to get cool tech
+                      products as well as clothes and food for my family. Really, Stormy has taken over my family
+                      in its entirety. In fact I once used Stormy to deliver emergency gloves to deal with a deadly
+                      pathogen that was released from the lab so humanity owes it's continued existence to Stormy.
                   </p>
                 </div>
                 <div class="client-id">
                   <div class="img-box">
-                    <img src="../static/images/client.jpg" alt="">
+                    <img src="../static/images/client3.jpeg" alt="">
                   </div>
                   <div class="name">
                     <h5>
-                      James Dew
+                      Michelle Humour
                     </h5>
                     <h6>
-                      Photographer
+                      Biologist
                     </h6>
                   </div>
                 </div>
