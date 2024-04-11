@@ -155,7 +155,7 @@ def remove_cart(item):
         if not (db.child('Users').child(UID).child('Cart').get().val() == None):
             return redirect(url_for('cart'))
         else:
-            db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
+            db.child("Users").child(UID).child('Cart').set("product_id")
             return redirect(url_for('cart'))
     else:
         my_item = db.child('Users').child(UID).child('Cart').child(item)
@@ -164,6 +164,11 @@ def remove_cart(item):
         db.child('Users').child(UID).child('Cart').child(item).set(new_prod)
         return redirect(url_for('cart'))
 
+@app.route('/clear_cart')
+def clear_cart():
+    UID = login_session['user']['localId']
+    db.child("Users").child(UID).child('Cart').set("product_id")
+    return redirect(url_for('cart'))
 
 
 @app.route('/cart', methods=['GET', 'POST'])

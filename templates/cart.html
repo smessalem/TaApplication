@@ -119,7 +119,7 @@
 
 
   <!-- product section -->
-
+{% if not (cart == "product_id") %}
   <section class="product_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
@@ -128,7 +128,7 @@
         </h2>
       </div>
       <div class="row">
-      {% if not (cart == "product_id") %}
+
         {% for item in cart %}
         <div class="col-sm-6 col-lg-4">
           <div class="box">
@@ -168,26 +168,95 @@
         <h2>
           Total: $ {{ total }}
         </h2>
+
+      <section class="slider_section_cart">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <a href="{{ url_for('clear_cart') }}">Buy</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+
+  <div class="col-md-5 ml-auto">
+  <div class="detail-box pr-md-3">
+    <p>
+      <a href="{{ url_for('clear_cart') }}">Buy</a>
+    </p>
   </div>
+  </div>
+  </div>
+
 
   {% else %}
 
   <section class="product_section layout_padding">
     <div class="container">
-        <div class="heading_container heading_center">
+      <div class="heading_container heading_center">
         <h2>
-          Your cart is currently empty!
+          My Cart
         </h2>
       </div>
-        <div class="heading_container heading_center">
-            <h2>
-              Total: $ {{ total }}
-            </h2>
-        </div>
+      <div class="row">
+      <span>Your Cart is Currently Empty</span>
+      </div>
     </div>
   </section>
 
+  <div class="heading_container heading_center">
+        <h2>
+          Total: $ {{ total }}
+
+        </h2>
+      <section class="slider_section_cart">
+      <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="detail-box">
+                    <a href="{{ url_for('clear_cart') }}">Buy</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+
+
+
+
+
+{#  <section class="product_section layout_padding">#}
+{#    <div class="container">#}
+{#        <div class="heading_container heading_center">#}
+{#        <h2>#}
+{#          Your cart is currently empty!#}
+{#        </h2>#}
+{#      </div>#}
+{#        <div class="heading_container heading_center">#}
+{#            <h2>#}
+{#              Total: $ {{ total }}#}
+{#            </h2>#}
+{#        </div>#}
+{#    </div>#}
+{#  </section>#}
+
   {% endif %}
+
+
 
   <!-- end product section -->
 

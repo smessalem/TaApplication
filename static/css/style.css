@@ -305,6 +305,20 @@ a:focus {
   background-color: #f7f7f7;
 }
 
+.slider_section_cart {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 45px 0;
+  background-color: #ffffff;
+}
+
 .slider_section .row {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -334,6 +348,18 @@ a:focus {
 }
 
 .slider_section .detail-box a {
+  display: inline-block;
+  padding: 10px 45px;
+  background-color: #f3c93e;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #f3c93e;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  margin-top: 15px;
+}
+
+.slider_section_cart .detail-box a {
   display: inline-block;
   padding: 10px 45px;
   background-color: #f3c93e;
