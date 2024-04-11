@@ -31,24 +31,24 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # db.child("Users").set("UID")
 # db.child("Products").set("product_id")
-
-# p1 = {"name": "Camera", "price": "200", "src": "p1.png"}
+#
+# p1 = {"name": "Camera", "price": "200", "src": "p1.png", "amount": 1}
 # db.child('Products').child("p1").set(p1)
-# p2 = {"name": "Controller Extension", "price": "50", "src": "p2.png"}
+# p2 = {"name": "Controller Extension", "price": "50", "src": "p2.png", "amount": 1}
 # db.child('Products').child("p2").set(p2)
-# p3 = {"name": "Drone", "price": "600", "src": "p3.png"}
+# p3 = {"name": "Drone", "price": "600", "src": "p3.png", "amount": 1}
 # db.child('Products').child("p3").set(p3)
-# p4 = {"name": "X4 Lens", "price": "1200", "src": "p4.png"}
+# p4 = {"name": "X4 Lens", "price": "1200", "src": "p4.png", "amount": 1}
 # db.child('Products').child("p4").set(p4)
-# p5 = {"name": "XYZ Speaker", "price": "150", "src": "p5.png"}
+# p5 = {"name": "XYZ Speaker", "price": "150", "src": "p5.png", "amount": 1}
 # db.child('Products').child("p5").set(p5)
-# p6 = {"name": "PS4 Controller", "price": "50", "src": "p6.png"}
+# p6 = {"name": "PS4 Controller", "price": "50", "src": "p6.png", "amount": 1}
 # db.child('Products').child("p6").set(p6)
-# p7 = {"name": "Spy Drone", "price": "800", "src": "p7.png"}
+# p7 = {"name": "Spy Drone", "price": "800", "src": "p7.png", "amount": 1}
 # db.child('Products').child("p7").set(p7)
-# p8 = {"name": "Polaroid", "price": "300", "src": "p8.png"}
+# p8 = {"name": "Polaroid", "price": "300", "src": "p8.png", "amount": 1}
 # db.child('Products').child("p8").set(p8)
-# p9 = {"name": "Webcam", "price": "50", "src": "p9.png"}
+# p9 = {"name": "Webcam", "price": "50", "src": "p9.png", "amount": 1}
 # db.child('Products').child("p9").set(p9)
 
 ######### end product db setup ##########
@@ -132,23 +132,38 @@ def testimonial():
 
 @app.route('/add_to_cart/<string:item>', methods=['GET', 'POST'])
 def add_to_cart(item):
-    print("debug")
+
     UID = login_session['user']['localId']
     product = db.child("Products").child(item).get().val()
-    db.child('Users').child(UID).child('Cart').child(item).set(product)
-    # carty = db.child('Users').child(UID).child('Cart').child('cart')
-    # carty.set({item : db.child('Products').child(item).get().val()})
-    print("debug2")
+    cart = db.child('Users').child(UID).child('Cart').get().val()
+
+    if item in cart:
+        my_item = db.child('Users').child(UID).child('Cart').child(item)
+        new_prod = my_item.get().val()
+        new_prod["amount"] += 1
+        db.child('Users').child(UID).child('Cart').child(item).set(new_prod)
+    else:
+        db.child('Users').child(UID).child('Cart').child(item).set(product)
     return redirect(url_for('home'))
 
 @app.route('/remove_cart/<string:item>', methods=['GET', 'POST'])
 def remove_cart(item):
     UID = login_session['user']['localId']
-    db.child('Users').child(UID).child('Cart').child(item).remove()
-    if not (db.child('Users').child(UID).child('Cart').get().val() == None):
+    quan = db.child('Users').child(UID).child('Cart').child(item).get().val()["amount"]
+    if quan == 1:
+        db.child('Users').child(UID).child('Cart').child(item).remove()
+        if not (db.child('Users').child(UID).child('Cart').get().val() == None):
+            return redirect(url_for('cart'))
+        else:
+            db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
+            return redirect(url_for('cart'))
+    else:
+        my_item = db.child('Users').child(UID).child('Cart').child(item)
+        new_prod = my_item.get().val()
+        new_prod["amount"] -= 1
+        db.child('Users').child(UID).child('Cart').child(item).set(new_prod)
         return redirect(url_for('cart'))
-    db.child("Users").child(login_session['user']['localId']).child('Cart').set("product_id")
-    return redirect(url_for('cart'))
+
 
 
 @app.route('/cart', methods=['GET', 'POST'])
@@ -158,7 +173,8 @@ def cart():
     cart_total = 0
     if not (my_cart == "product_id"):
         for item in my_cart:
-            cart_total += int(db.child('Users').child(uid).child('Cart').child(item).child('price').get().val())
+            cart_total += (int(db.child('Users').child(uid).child('Cart').child(item).child('price').get().val()) *
+                           int(db.child('Users').child(uid).child('Cart').child(item).child('amount').get().val()))
 
     return render_template('cart.html', cart=my_cart, total=cart_total)
 
