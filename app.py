@@ -82,7 +82,7 @@ def signup():
         try:
             if password == confirm_password:
                 try:
-                    login_session['user'] = auth.create_user_with_email_and_password(email, password)
+                    login_session['user'] = auth.create_user_with_email_and_password(email,password)
                     UID = login_session['user']['localId']
                     user = {"email" : email, "password" : password, "name" : username}
                     db.child("Users").child(UID).set(user)
